@@ -1,0 +1,35 @@
+AddDefaultCharset utf-8
+Options -Indexes
+
+# Deny access to .ini files (like .user.ini)
+<FilesMatch "(\.ini)$">
+  Order Deny,Allow
+  Deny From All
+</FilesMatch>
+
+RewriteEngine On
+
+# Search for static index file when requesting directories.
+# You can remove next few lines if you are not using static pages.
+# They are primarily useful when you move static site into Fasten framework
+RewriteCond  %{DOCUMENT_ROOT}/application/webroot%{REQUEST_URI}/index.html -f
+RewriteRule ^.*$ application/webroot%{REQUEST_URI}index.html [L]
+
+RewriteCond  %{DOCUMENT_ROOT}/application/webroot%{REQUEST_URI}/index.htm -f
+RewriteRule ^.*$ application/webroot%{REQUEST_URI}index.htm [L]
+
+# Redirect direct requests targeted to path scripts to path itself
+RewriteCond %{REQUEST_URI} ^.+/(in\.php|out\.php)$
+RewriteRule ^(.*)$ index.php [L]
+
+# Return directly accessed files without any additional processing by framework
+RewriteCond %{DOCUMENT_ROOT}/application/webroot%{REQUEST_URI} -f
+RewriteRule ^.*$ application/webroot%{REQUEST_URI} [L]
+
+RewriteCond %{DOCUMENT_ROOT}/framework/webroot%{REQUEST_URI} -f
+RewriteRule ^.*$ framework/webroot%{REQUEST_URI} [L]
+
+# Route all not matched files and directories to framework
+RewriteCond  %{SCRIPT_FILENAME} !-f
+RewriteCond  %{SCRIPT_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?fasten_uri=$1 [L]
