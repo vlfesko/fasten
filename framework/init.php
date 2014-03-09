@@ -4,8 +4,8 @@
  *
  * @category  Fasten
  * @package   Fasten_Main
- * @author    Volodymyr Fesko <volodymyr.fesko@smile.fr>
- * @copyright 2014 Volodymyr Fesko
+ * @author    Vladimir Fesko <vladimir.fesko@gmail.com>
+ * @copyright 2014 Vladimir Fesko
  */
 namespace F;
 
